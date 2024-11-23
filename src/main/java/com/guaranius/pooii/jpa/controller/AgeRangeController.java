@@ -1,52 +1,73 @@
 package com.guaranius.pooii.jpa.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.guaranius.pooii.jpa.entity.AgeRange;
 import com.guaranius.pooii.jpa.service.AgeRangeService;
 
-@RestController
-@RequestMapping("/ageRanges")
+@Controller
+@RequestMapping("/ageRange")
 public class AgeRangeController {
 
     @Autowired
-    private AgeRangeService ageRangeService;
+    private AgeRangeService service;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public AgeRange insert(@RequestBody AgeRange ageRange) {
-        return ageRangeService.insert(ageRange);
-    }
-
-    @PutMapping("/{id}")
-    public AgeRange update(@PathVariable Long id, @RequestBody AgeRange ageRange) {
-        return ageRangeService.update(id, ageRange);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        ageRangeService.delete(id);
+    @GetMapping
+    public ModelAndView ageRanges() {
+        var mv = new ModelAndView("home");
+        mv.addObject("list", service.findAll());
+        return mv;
     }
 
     @GetMapping
-    public List<AgeRange> getAll() {
-        return ageRangeService.getAll();
+    @RequestMapping("/addAgeRange")
+    public ModelAndView addGame() {
+        var mv = new ModelAndView("addAgeRange");
+        mv.addObject("ageRange", new AgeRange());
+        return mv;
     }
 
-    @GetMapping("/{id}")
-    public AgeRange getById(@PathVariable Long id) {
-        return ageRangeService.getById(id);
+    @GetMapping
+    @RequestMapping("/{id}")
+    public ModelAndView update(@PathVariable long id) {
+        var mv = new ModelAndView("addAgeRange");
+        var opt = service.findById(id);
+        if(opt.isPresent()) {
+            mv.addObject("ageRange", opt.get());
+            return mv;
+        }
+        return new ModelAndView("redirect:/game");
+    }
+
+    @GetMapping
+    @RequestMapping("/{id}/delete")
+    public ModelAndView delete(@PathVariable long id) {
+        var mv = new ModelAndView("addAgeRange");
+        var opt = service.findById(id);
+        if(opt.isPresent()) {
+            service.delete(opt.get());
+        }
+        return new ModelAndView("redirect:/game");
+    }
+
+    @PostMapping
+    @RequestMapping("/save")
+    public ModelAndView insert(@ModelAttribute("ageRange") AgeRange ageRange) {
+        try {
+            service.save(ageRange);
+            return new ModelAndView("redirect:/game");
+        } catch (Exception e) {
+            var mv = new ModelAndView("addAgeRange");
+            mv.addObject("ageRange", ageRange);
+            mv.addObject("error", e.getMessage());
+            return mv;
+        }
     }
 }

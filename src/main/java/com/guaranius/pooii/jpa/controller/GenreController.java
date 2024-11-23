@@ -1,52 +1,73 @@
 package com.guaranius.pooii.jpa.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.guaranius.pooii.jpa.entity.Genre;
 import com.guaranius.pooii.jpa.service.GenreService;
 
-@RestController
-@RequestMapping("/genres")
+@Controller
+@RequestMapping("/genre")
 public class GenreController {
 
     @Autowired
-    private GenreService genreService;
+    private GenreService service;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Genre insert(@RequestBody Genre genre) {
-        return genreService.insert(genre);
-    }
-
-    @PutMapping("/{id}")
-    public Genre update(@PathVariable Long id, @RequestBody Genre genre) {
-        return genreService.update(id, genre);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        genreService.delete(id);
+    @GetMapping
+    public ModelAndView genres() {
+        var mv = new ModelAndView("home");
+        mv.addObject("list", service.findAll());
+        return mv;
     }
 
     @GetMapping
-    public List<Genre> getAll() {
-        return genreService.getAll();
+    @RequestMapping("/addGenre")
+    public ModelAndView addGenre() {
+        var mv = new ModelAndView("addGenre");
+        mv.addObject("genre", new Genre());
+        return mv;
     }
 
-    @GetMapping("/{id}")
-    public Genre getById(@PathVariable Long id) {
-        return genreService.getById(id);
+    @GetMapping
+    @RequestMapping("/{id}")
+    public ModelAndView update(@PathVariable long id) {
+        var mv = new ModelAndView("addGenre");
+        var opt = service.findById(id);
+        if(opt.isPresent()) {
+            mv.addObject("genre", opt.get());
+            return mv;
+        }
+        return new ModelAndView("redirect:/game");
+    }
+
+    @GetMapping
+    @RequestMapping("/{id}/delete")
+    public ModelAndView delete(@PathVariable long id) {
+        var mv = new ModelAndView("addGenre");
+        var opt = service.findById(id);
+        if(opt.isPresent()) {
+            service.delete(opt.get());
+        }
+        return new ModelAndView("redirect:/game");
+    }
+
+    @PostMapping
+    @RequestMapping("/save")
+    public ModelAndView insert(@ModelAttribute("genre") Genre genre) {
+        try {
+            service.save(genre);
+            return new ModelAndView("redirect:/game");
+        } catch (Exception e) {
+            var mv = new ModelAndView("addGenre");
+            mv.addObject("genre", genre);
+            mv.addObject("error", e.getMessage());
+            return mv;
+        }
     }
 }

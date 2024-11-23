@@ -1,52 +1,73 @@
 package com.guaranius.pooii.jpa.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.guaranius.pooii.jpa.entity.User;
 import com.guaranius.pooii.jpa.service.UserService;
 
-@RestController
+@Controller
 @RequestMapping("/users")
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserService service;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public User insert(@RequestBody User user) {
-        return userService.insert(user);
-    }
-
-    @PutMapping("/{id}")
-    public User update(@PathVariable Long id, @RequestBody User user) {
-        return userService.update(id, user);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        userService.delete(id);
+    @GetMapping
+    public ModelAndView users() {
+        var mv = new ModelAndView("home");
+        mv.addObject("list", service.findAll());
+        return mv;
     }
 
     @GetMapping
-    public List<User> getAll() {
-        return userService.getAll();
+    @RequestMapping("/addUser")
+    public ModelAndView addUser() {
+        var mv = new ModelAndView("addUser");
+        mv.addObject("user", new User());
+        return mv;
     }
 
-    @GetMapping("/{id}")
-    public User getById(@PathVariable Long id) {
-        return userService.getById(id);
+    @GetMapping
+    @RequestMapping("/{id}")
+    public ModelAndView update(@PathVariable long id) {
+        var mv = new ModelAndView("addUser");
+        var opt = service.findById(id);
+        if(opt.isPresent()) {
+            mv.addObject("user", opt.get());
+            return mv;
+        }
+        return new ModelAndView("redirect:/game");
+    }
+
+    @GetMapping
+    @RequestMapping("/{id}/delete")
+    public ModelAndView delete(@PathVariable long id) {
+        var mv = new ModelAndView("addUser");
+        var opt = service.findById(id);
+        if(opt.isPresent()) {
+            service.delete(opt.get());
+        }
+        return new ModelAndView("redirect:/game");
+    }
+
+    @PostMapping
+    @RequestMapping("/save")
+    public ModelAndView insert(@ModelAttribute("user") User user) {
+        try {
+            service.save(user);
+            return new ModelAndView("redirect:/game");
+        } catch (Exception e) {
+            var mv = new ModelAndView("addUser");
+            mv.addObject("user", user);
+            mv.addObject("error", e.getMessage());
+            return mv;
+        }
     }
 }

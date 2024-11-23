@@ -3,7 +3,9 @@ package com.guaranius.pooii.jpa.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.guaranius.pooii.jpa.entity.Developer;
@@ -13,36 +15,24 @@ import com.guaranius.pooii.jpa.repository.DeveloperRepository;
 public class DeveloperService {
 
     @Autowired
-    private DeveloperRepository developerRepository;
+    private DeveloperRepository repository;
 
-    public Developer insert(Developer developer) {
-        return developerRepository.save(developer);
+    public Optional<Developer> findById(long id) {
+        return repository.findById(id);
     }
 
-    public Developer update(Long id, Developer developer) {
-        Optional<Developer> existingDeveloper = developerRepository.findById(id);
-        if (existingDeveloper.isPresent()) {
-            Developer developerToUpdate = existingDeveloper.get();
-            developerToUpdate.setName(developer.getName());
-            return developerRepository.save(developerToUpdate);
-        } else {
-            throw new RuntimeException("Id " + id + " not found");
+    public List<Developer> findAll() {
+        return repository.findAll(Sort.by("name"));
+    }
+
+    public void save(Developer developer) {
+        if(Strings.isBlank(developer.getName())) {
+            throw new RuntimeException("Nome não informado.");
         }
+        repository.save(developer);
     }
 
-    public void delete(Long id) {
-        if (developerRepository.existsById(id)) {
-            developerRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Id " + id + " not found");
-        }
-    }
-
-    public List<Developer> getAll() {
-        return developerRepository.findAll();
-    }
-
-    public Developer getById(Long id) {
-        return developerRepository.findById(id).orElseThrow(() -> new RuntimeException("Id " + id + " not found"));
+    public void delete(Developer developer) {
+        repository.delete(developer);
     }
 }

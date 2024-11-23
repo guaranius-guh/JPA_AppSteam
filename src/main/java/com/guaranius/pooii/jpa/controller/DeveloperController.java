@@ -1,52 +1,73 @@
 package com.guaranius.pooii.jpa.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.guaranius.pooii.jpa.entity.Developer;
 import com.guaranius.pooii.jpa.service.DeveloperService;
 
-@RestController
-@RequestMapping("/developers")
+@Controller
+@RequestMapping("/developer")
 public class DeveloperController {
 
     @Autowired
-    private DeveloperService developerService;
+    private DeveloperService service;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Developer insert(@RequestBody Developer developer) {
-        return developerService.insert(developer);
-    }
-
-    @PutMapping("/{id}")
-    public Developer update(@PathVariable Long id, @RequestBody Developer developer) {
-        return developerService.update(id, developer);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        developerService.delete(id);
+    @GetMapping
+    public ModelAndView developers() {
+        var mv = new ModelAndView("home");
+        mv.addObject("list", service.findAll());
+        return mv;
     }
 
     @GetMapping
-    public List<Developer> getAll() {
-        return developerService.getAll();
+    @RequestMapping("/addDeveloper")
+    public ModelAndView addDeveloper() {
+        var mv = new ModelAndView("addDeveloper");
+        mv.addObject("developer", new Developer());
+        return mv;
     }
 
-    @GetMapping("/{id}")
-    public Developer getById(@PathVariable Long id) {
-        return developerService.getById(id);
+    @GetMapping
+    @RequestMapping("/{id}")
+    public ModelAndView update(@PathVariable long id) {
+        var mv = new ModelAndView("addDeveloper");
+        var opt = service.findById(id);
+        if(opt.isPresent()) {
+            mv.addObject("developer", opt.get());
+            return mv;
+        }
+        return new ModelAndView("redirect:/game");
+    }
+
+    @GetMapping
+    @RequestMapping("/{id}/delete")
+    public ModelAndView delete(@PathVariable long id) {
+        var mv = new ModelAndView("addDeveloper");
+        var opt = service.findById(id);
+        if(opt.isPresent()) {
+            service.delete(opt.get());
+        }
+        return new ModelAndView("redirect:/game");
+    }
+
+    @PostMapping
+    @RequestMapping("/save")
+    public ModelAndView insert(@ModelAttribute("developer") Developer developer) {
+        try {
+            service.save(developer);
+            return new ModelAndView("redirect:/game");
+        } catch (Exception e) {
+            var mv = new ModelAndView("addDeveloper");
+            mv.addObject("developer", developer);
+            mv.addObject("error", e.getMessage());
+            return mv;
+        }
     }
 }

@@ -3,7 +3,9 @@ package com.guaranius.pooii.jpa.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.guaranius.pooii.jpa.entity.Genre;
@@ -13,36 +15,24 @@ import com.guaranius.pooii.jpa.repository.GenreRepository;
 public class GenreService {
 
     @Autowired
-    private GenreRepository genreRepository;
+    private GenreRepository repository;
 
-    public Genre insert(Genre genre) {
-        return genreRepository.save(genre);
+    public Optional<Genre> findById(long id) {
+        return repository.findById(id);
     }
 
-    public Genre update(Long id, Genre genre) {
-        Optional<Genre> existingGenre = genreRepository.findById(id);
-        if (existingGenre.isPresent()) {
-            Genre genreToUpdate = existingGenre.get();
-            genreToUpdate.setName(genre.getName());
-            return genreRepository.save(genreToUpdate);
-        } else {
-            throw new RuntimeException("Id " + id + " not found");
+    public List<Genre> findAll() {
+        return repository.findAll(Sort.by("name"));
+    }
+
+    public void save(Genre genre) {
+        if(Strings.isBlank(genre.getName())) {
+            throw new RuntimeException("Nome não informado.");
         }
+        repository.save(genre);
     }
 
-    public void delete(Long id) {
-        if (genreRepository.existsById(id)) {
-            genreRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Id " + id + " not found");
-        }
-    }
-
-    public List<Genre> getAll() {
-        return genreRepository.findAll();
-    }
-
-    public Genre getById(Long id) {
-        return genreRepository.findById(id).orElseThrow(() -> new RuntimeException("Id " + id + " not found"));
+    public void delete(Genre genre) {
+        repository.delete(genre);
     }
 }

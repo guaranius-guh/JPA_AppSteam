@@ -3,7 +3,9 @@ package com.guaranius.pooii.jpa.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.guaranius.pooii.jpa.entity.AgeRange;
@@ -13,36 +15,24 @@ import com.guaranius.pooii.jpa.repository.AgeRangeRepository;
 public class AgeRangeService {
 
     @Autowired
-    private AgeRangeRepository ageRangeRepository;
+    private AgeRangeRepository repository;
 
-    public AgeRange insert(AgeRange ageRange) {
-        return ageRangeRepository.save(ageRange);
+    public Optional<AgeRange> findById(long id) {
+        return repository.findById(id);
     }
 
-    public AgeRange update(Long id, AgeRange ageRange) {
-        Optional<AgeRange> existingAgeRange = ageRangeRepository.findById(id);
-        if (existingAgeRange.isPresent()) {
-            AgeRange ageRangeToUpdate = existingAgeRange.get();
-            ageRangeToUpdate.setAgeRange(ageRange.getAgeRange());
-            return ageRangeRepository.save(ageRangeToUpdate);
-        } else {
-            throw new RuntimeException("Id " + id + " not found");
+    public List<AgeRange> findAll() {
+        return repository.findAll(Sort.by("name"));
+    }
+
+    public void save(AgeRange ageRange) {
+        if(Strings.isBlank(ageRange.getAgeRange())) {
+            throw new RuntimeException("Nada informado.");
         }
+        repository.save(ageRange);
     }
 
-    public void delete(Long id) {
-        if (ageRangeRepository.existsById(id)) {
-            ageRangeRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Id " + id + " not found");
-        }
-    }
-
-    public List<AgeRange> getAll() {
-        return ageRangeRepository.findAll();
-    }
-
-    public AgeRange getById(Long id) {
-        return ageRangeRepository.findById(id).orElseThrow(() -> new RuntimeException("Id " + id + " not found"));
+    public void delete(AgeRange ageRange) {
+        repository.delete(ageRange);
     }
 }
