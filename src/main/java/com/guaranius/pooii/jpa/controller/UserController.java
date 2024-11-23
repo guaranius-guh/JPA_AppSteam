@@ -13,7 +13,7 @@ import com.guaranius.pooii.jpa.entity.User;
 import com.guaranius.pooii.jpa.service.UserService;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired

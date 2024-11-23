@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="home.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam</title>
+    <link rel="stylesheet" href="2home.css">
 </head>
+
 <body>
     <header>
-        <div class="logo"> <img src="" alt="STEAM"></div>
+        <button><div class="logo"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt=""></div></button>
         <div class="search-container">
             <input type="text" placeholder="Pesquisar jogos..." id="search">
         </div>
@@ -19,7 +22,32 @@
     </header>
    
     <main>
-        
+        <div class="game-section">
+            <div class="game-card">
+                <img src="gta.jpg" alt="Grand Theft Auto V" class="game-img">
+                <div class="game-info">
+                    <h3>Grand Theft Auto V</h3>
+                    <button class="edit-btn">Editar</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <img src="callofduty.jpg" alt="Call of Duty Warzone" class="game-img">
+
+                <div class="game-info">
+                    <h3>Call of Duty</h3>
+                    <button class="edit-btn">Editar</button>
+                </div>
+            
+            
+            </div>
+        </div>
     </main>
+
+
+    <footer>
+        <p>&copy; 2024 Steam</p>
+    </footer>
+    
 </body>
 </html>
