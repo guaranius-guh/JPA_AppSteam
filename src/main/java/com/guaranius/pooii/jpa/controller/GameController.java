@@ -1,75 +1,73 @@
 package com.guaranius.pooii.jpa.controller;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.guaranius.pooii.jpa.entity.Game;
 import com.guaranius.pooii.jpa.service.GameService;
 
 @RestController
-@RequestMapping("/games")
+@RequestMapping("/game")
 public class GameController {
 
-    private final GameService gameService;
+    @Autowired
+    private GameService service;
 
-    public GameController(GameService gameService) {
-        this.gameService = gameService;
+    @PostMapping
+    @RequestMapping("/save")
+    public ModelAndView insert(@ModelAttribute("game") Game game) {
+        try {
+            service.insert(game);
+            return new ModelAndView("redirect:/game");
+        } catch (Exception e) {
+            var mv = new ModelAndView("addGame");
+            mv.addObject("game", game);
+            mv.addObject("error", e.getMessage());
+            return mv;
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<Game>> getAllGames() {
-        return ResponseEntity.ok(gameService.getAllGames());
+    public ModelAndView home() {
+        var mv = new ModelAndView("home");
+        mv.addObject("list", service.getAllGames());
+        return mv;
     }
 
-    @GetMapping("/genre/{genreId}")
-    public ResponseEntity<List<Game>> getGamesByGenre(@PathVariable Long genreId) {
-        return ResponseEntity.ok(gameService.getGamesByGenre(genreId));
+    @GetMapping
+    @RequestMapping("/addGame")
+    public ModelAndView addGame() {
+        var mv = new ModelAndView("addGame");
+        mv.addObject("game", new Game());
+        return mv;
     }
 
-    @GetMapping("/developer/{developerId}")
-    public ResponseEntity<List<Game>> getGamesByDeveloper(@PathVariable Long developerId) {
-        return ResponseEntity.ok(gameService.getGamesByDeveloper(developerId));
-    }
-
-    @GetMapping("/agerange/{ageRangeId}")
-    public ResponseEntity<List<Game>> getGamesByAgeRange(@PathVariable Long ageRangeId) {
-        return ResponseEntity.ok(gameService.getGamesByAgeRange(ageRangeId));
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Game insert(@RequestBody Game game) {
-        return gameService.insert(game);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Game> update(@PathVariable Long id, @RequestBody Game game) {
-        try {
-            Game updatedGame = gameService.update(id, game);
-            return ResponseEntity.ok(updatedGame);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    @GetMapping
+    @RequestMapping("/{id}")
+    public ModelAndView update(@PathVariable long id) {
+        var mv = new ModelAndView("addGame");
+        var opt = service.getById(id);
+        if(opt.isPresent()) {
+            mv.addObject("game", opt.get());
+            return mv;
         }
+        return new ModelAndView("redirect:/game");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        try {
-            gameService.delete(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    @GetMapping
+    @RequestMapping("/{id}/delete")
+    public ModelAndView delete(@PathVariable long id){
+        var mv = new ModelAndView("addGame");
+        var opt = service.getById(id);
+        if(opt.isPresent()) {
+            service.delete(opt.get());
         }
+        return new ModelAndView("redirect:/continente");
     }
 }

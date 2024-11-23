@@ -1,5 +1,7 @@
 package com.guaranius.pooii.jpa.entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,4 +36,8 @@ public class Game {
     @ManyToOne
     @JoinColumn(name = "id_age_range")
     private AgeRange ageRange;
+
+    private LocalDate releasDate;
+
+    private String image;
 }

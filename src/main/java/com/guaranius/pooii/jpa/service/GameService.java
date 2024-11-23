@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.guaranius.pooii.jpa.entity.Game;
@@ -33,16 +34,16 @@ public class GameService {
         }
     }
 
-    public void delete(Long id) {
-        if (gameRepository.existsById(id)) {
-            gameRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Id " + id + " not found");
-        }
+    public void delete(Game game) {
+        gameRepository.delete(game);
     }
 
     public List<Game> getAllGames() {
-        return gameRepository.findAll();
+        return gameRepository.findAll(Sort.by("name"));
+    }
+
+    public Optional<Game> getById(long id){
+        return gameRepository.findById(id);
     }
 
     public List<Game> getGamesByGenre(Long genreId) {

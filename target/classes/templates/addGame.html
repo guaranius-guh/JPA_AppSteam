@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Jogo</title>
+    <link rel="stylesheet" href="cadastrojogo.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Cadastro de Jogo</h1>
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="nome">Nome do Jogo:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+
+            <div class="desenvolvedora">
+                <label for="nome">Desenvolvedora:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+
+            <div class="desenvolvedora">
+                <label for="nome">Descrição:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoria:</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="acao">Ação</option>
+                    <option value="aventura">Aventura</option>
+                    <option value="rpg">RPG</option>
+                    <option value="estrategia">Estratégia</option>
+                    <option value="simulacao">Simulação</option>
+                    <option value="esportes">Esportes</option>
+                </select>
+            </div>
+
+            <div class="faixaEtaria">
+                <label for="faixaEtaria">Faixa Etária:</label>
+                <select id="faixaEtaria" name="faixaEtaria" required>
+                    <option value="livre">Livre</option>
+                    <option value="+3">Acima de 3 anos</option>
+                    <option value="+7">Acima de 7 anos</option>
+                    <option value="+12">Acima de 12 anos</option>
+                    <option value="+16">Acima de 16 anos</option>
+                    <option value="+18">Acima de 18 anos</option>
+                </select>
+            </div>
+
+            <div class="dataLancamento">
+                <label for="data-lancamento">Data de Lançamento:</label>
+                <input type="date" id="data-lancamento" name="data-lancamento" required>
+            </div>
+
+            <div class="form-group">
+                <label for="valor">Valor R$:</label>
+                <input type="number" id="valor" name="valor" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Cadastrar Jogo</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
