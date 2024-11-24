@@ -37,7 +37,7 @@ public class GameController {
     @GetMapping
     @RequestMapping("/{id}")
     public ModelAndView update(@PathVariable long id) {
-        var mv = new ModelAndView("addGame");
+        var mv = new ModelAndView("updateGame");
         var opt = service.findById(id);
         if(opt.isPresent()) {
             mv.addObject("game", opt.get());

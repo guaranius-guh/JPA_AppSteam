@@ -37,7 +37,7 @@ public class GenreController {
     @GetMapping
     @RequestMapping("/{id}")
     public ModelAndView update(@PathVariable long id) {
-        var mv = new ModelAndView("addGenre");
+        var mv = new ModelAndView("updateGenre");
         var opt = service.findById(id);
         if(opt.isPresent()) {
             mv.addObject("genre", opt.get());

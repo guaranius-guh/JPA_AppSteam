@@ -37,7 +37,7 @@ public class AgeRangeController {
     @GetMapping
     @RequestMapping("/{id}")
     public ModelAndView update(@PathVariable long id) {
-        var mv = new ModelAndView("addAgeRange");
+        var mv = new ModelAndView("updateAgeRange");
         var opt = service.findById(id);
         if(opt.isPresent()) {
             mv.addObject("ageRange", opt.get());

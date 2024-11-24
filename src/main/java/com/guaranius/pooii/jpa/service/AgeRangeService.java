@@ -22,7 +22,7 @@ public class AgeRangeService {
     }
 
     public List<AgeRange> findAll() {
-        return repository.findAll(Sort.by("name"));
+        return repository.findAll(Sort.by("ageRange"));
     }
 
     public void save(AgeRange ageRange) {

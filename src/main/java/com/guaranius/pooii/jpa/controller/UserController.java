@@ -37,7 +37,7 @@ public class UserController {
     @GetMapping
     @RequestMapping("/{id}")
     public ModelAndView update(@PathVariable long id) {
-        var mv = new ModelAndView("addUser");
+        var mv = new ModelAndView("updateUser");
         var opt = service.findById(id);
         if(opt.isPresent()) {
             mv.addObject("user", opt.get());

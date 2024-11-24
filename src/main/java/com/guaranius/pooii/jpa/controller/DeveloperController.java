@@ -37,7 +37,7 @@ public class DeveloperController {
     @GetMapping
     @RequestMapping("/{id}")
     public ModelAndView update(@PathVariable long id) {
-        var mv = new ModelAndView("addDeveloper");
+        var mv = new ModelAndView("updateDeveloper");
         var opt = service.findById(id);
         if(opt.isPresent()) {
             mv.addObject("developer", opt.get());
