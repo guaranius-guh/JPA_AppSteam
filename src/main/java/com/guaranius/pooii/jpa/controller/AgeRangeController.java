@@ -27,8 +27,8 @@ public class AgeRangeController {
     }
 
     @GetMapping
-    @RequestMapping("/addAgeRange")
-    public ModelAndView addGame() {
+    @RequestMapping("/add")
+    public ModelAndView add() {
         var mv = new ModelAndView("addAgeRange");
         mv.addObject("ageRange", new AgeRange());
         return mv;
@@ -49,7 +49,6 @@ public class AgeRangeController {
     @GetMapping
     @RequestMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
-        var mv = new ModelAndView("addAgeRange");
         var opt = service.findById(id);
         if(opt.isPresent()) {
             service.delete(opt.get());

@@ -1,53 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novo Usuário</title>
-    <link rel="stylesheet" href="/css/addUser.css">
+    <link rel="stylesheet" href="/css/addOrUpdate.css">
 </head>
-
 <body>
     <div class="container">
-        <h1>Novo Usuário</h1>
-
-        <div class="login">
-            <img src="login.png" width="100" height="100" alt="Logo" /> 
-            </div>
-        
-        <form action="#" method="POST">
-
+        <h1>Cadastro de Jogo</h1>
+        <form th:action="@{/game/save}" th:object="${game}" method="post">
             <div class="form-group">
-                <label for="nome">Nome:</label>
-                <input type="text" id="user" name="user" required>
+                <label for="name">Nome do Jogo:</label>
+                <input type="text" th:field="*{name}">
             </div>
-
             <div class="form-group">
-                <label for="nome">Função:</label>
-                <input type="text" id="function" name="function" required>
+                <label for="developer">Desenvolvedora:</label>
+                <input type="number" th:field="*{developer}">
             </div>
-
             <div class="form-group">
-                <label for="nome">login:</label>
-                <input type="text" id="login" name="login" required>
+                <label for="genre">Gênero:</label>
+                <input type="number" th:field="*{genre}">
             </div>
-
             <div class="form-group">
-                <label for="nome">Senha:</label>
-                <input type="text" id="password" name="password" required>
+                <label for="ageRange">Faixa Etária:</label>
+                <input type="number" th:field="*{ageRange}">
             </div>
-
             <div class="form-group">
-                <label for="nome">Confirmar Senha:</label>
-                <input type="text" id="password_1" name="password_1" required>
+                <label for="release">Data de Lançamento:</label>
+                <input type="date" th:field="*{releaseDate}">
             </div>
-
             <div class="form-group">
                 <button type="submit">Salvar</button>
             </div>
-
+            <div class="form-group">
+                <button type="reset">Cancelar</button>
+            </div>
         </form>
+        <p th:if="${error != null}" th:text="${error}"></p>
+        <br>
     </div>
 </body>
 </html>

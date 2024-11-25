@@ -1,53 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steam</title>
     <link rel="stylesheet" href="/css/home.css">
 </head>
-
 <body>
     <header>
-        <button><div class="logo"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt=""></div></button>
+        <button><div class="logo"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png"></div></button>
         <div class="search-container">
             <input type="text" placeholder="Pesquisar jogos..." id="search">
         </div>
         <div class="menu">
-            <div class="menu-item" id="menu-sandwich">☰</div>
-            <button class="btn" id="novo-jogo">Novo Jogo</button>
-            <button class="btn" id="conta">Conta</button>
+            <a class="addButton" th:href="@{/game/add}">Novo Jogo</a>
+            <a class="addButton" th:href="@{/developer/add}">Nova Desenvolvedora</a>
+            <a class="addButton" th:href="@{/genre/add}">Novo Gênero</a>
+            <a class="addButton" th:href="@{/ageRange/add}">Nova Faixa Etária</a>
+            <a class="addButton" th:href="@{/user/add}">Novo Usuário</a>
+            <a class="addButton" th:href="@{/user}">Sair</a>
             </div>
     </header>
-   
     <main>
         <div class="game-section">
-            <div class="game-card">
-                <img src="gta.jpg" alt="Grand Theft Auto V" class="game-img">
-                <div class="game-info">
-                    <h3>Grand Theft Auto V</h3>
-                    <button class="edit-btn">Editar</button>
+            <div class="game-grid">
+                <div th:each="e : ${list}" class="game-card">
+                    <div class="game-image">
+                        <img src="https://via.placeholder.com/150">
+                    </div>
+                    <div class="game-info">
+                        <h3 th:text="${e.name}">Nome do Jogo</h3>
+                        <a th:href="@{/game/{id}(id=${e.id})}" class="edit-link">Editar</a>
+                    </div>
                 </div>
             </div>
-
-            <div class="game-card">
-                <img src="callofduty.jpg" alt="Call of Duty Warzone" class="game-img">
-
-                <div class="game-info">
-                    <h3>Call of Duty</h3>
-                    <button class="edit-btn">Editar</button>
-                </div>
-            
-            
-            </div>
+            <p th:unless="${list.size()} > 0">Não há jogos cadastrados.</p>
         </div>
     </main>
-
-
     <footer>
         <p>&copy; 2024 Steam</p>
     </footer>
-    
 </body>
 </html>

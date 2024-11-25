@@ -27,8 +27,8 @@ public class DeveloperController {
     }
 
     @GetMapping
-    @RequestMapping("/addDeveloper")
-    public ModelAndView addDeveloper() {
+    @RequestMapping("/add")
+    public ModelAndView add() {
         var mv = new ModelAndView("addDeveloper");
         mv.addObject("developer", new Developer());
         return mv;
@@ -49,7 +49,6 @@ public class DeveloperController {
     @GetMapping
     @RequestMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
-        var mv = new ModelAndView("addDeveloper");
         var opt = service.findById(id);
         if(opt.isPresent()) {
             service.delete(opt.get());

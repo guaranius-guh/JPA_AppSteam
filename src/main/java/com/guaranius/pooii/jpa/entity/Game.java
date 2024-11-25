@@ -37,7 +37,7 @@ public class Game {
     @JoinColumn(name = "id_age_range")
     private AgeRange ageRange;
 
-    private LocalDate releasDate;
+    private LocalDate releaseDate;
 
     private String image;
 }

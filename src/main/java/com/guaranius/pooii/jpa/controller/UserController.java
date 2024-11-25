@@ -27,8 +27,8 @@ public class UserController {
     }
 
     @GetMapping
-    @RequestMapping("/addUser")
-    public ModelAndView addUser() {
+    @RequestMapping("/add")
+    public ModelAndView add() {
         var mv = new ModelAndView("addUser");
         mv.addObject("user", new User());
         return mv;
@@ -49,7 +49,6 @@ public class UserController {
     @GetMapping
     @RequestMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
-        var mv = new ModelAndView("addUser");
         var opt = service.findById(id);
         if(opt.isPresent()) {
             service.delete(opt.get());

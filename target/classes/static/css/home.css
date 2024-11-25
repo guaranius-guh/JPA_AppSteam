@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -24,11 +23,6 @@ header {
     height: auto;
 }
 
-button {
-    border-radius: 50%;
-    background-size: cover;
-}
-
 .search-container {
     flex-grow: 1;
     margin-left: 50px;
@@ -39,7 +33,7 @@ button {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    font-size: 16px;   
+    font-size: 16px;
 }
 
 .menu {
@@ -53,41 +47,48 @@ button {
     cursor: pointer;
 }
 
-.btn {
-    background-color: #007bff;
+.addButton {
     color: white;
-    border: none;
+    text-decoration: none;
+    background-color: #007bff;
     padding: 10px 20px;
     border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.btn:hover {
-    background-color: #007bff;
-}
+    display: inline-block;
+    text-align: center;
+    margin-left: 5px;
+  }
+  
+  .addButton:hover {
+    background-color: #0056b3;
+    text-decoration: none;
+  }
 
 main {
     padding: 20px;
 }
 
 .game-section {
-    display: flex;
+    margin-top: 20px;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
-    justify-content: center;
 }
 
 .game-card {
     background-color: #2a3a46;
     border-radius: 10px;
     overflow: hidden;
-    width: 200px;
     text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
 }
 
-.game-img {
+.game-image img {
     width: 100%;
-    height: 120px;
+    height: 150px;
     object-fit: cover;
 }
 
@@ -96,22 +97,39 @@ main {
     color: white;
 }
 
-.edit-btn {
+.edit-link {
+    display: inline-block;
     background-color: #007bff;
     color: white;
-    border: none;
     padding: 5px 10px;
     border-radius: 5px;
-    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
 }
 
-.edit-btn:hover {
-    background-color: #007bff;
+.edit-link:hover {
+    background-color: #0056b3;
 }
 
-footer {
+.game-card:hover {
+    transform: translateY(-10px);
+}
+
+.no-games {
     text-align: center;
-    padding: 10px;
-    background-color: #171a21;
-    margin-top: 30px;
+    color: #ccc;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .game-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .game-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
 }

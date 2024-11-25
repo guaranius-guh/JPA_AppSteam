@@ -27,8 +27,8 @@ public class GameController {
     }
 
     @GetMapping
-    @RequestMapping("/addGame")
-    public ModelAndView addGame() {
+    @RequestMapping("/add")
+    public ModelAndView add() {
         var mv = new ModelAndView("addGame");
         mv.addObject("game", new Game());
         return mv;
@@ -49,7 +49,6 @@ public class GameController {
     @GetMapping
     @RequestMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
-        var mv = new ModelAndView("addGame");
         var opt = service.findById(id);
         if(opt.isPresent()) {
             service.delete(opt.get());

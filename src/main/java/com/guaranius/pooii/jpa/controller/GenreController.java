@@ -27,8 +27,8 @@ public class GenreController {
     }
 
     @GetMapping
-    @RequestMapping("/addGenre")
-    public ModelAndView addGenre() {
+    @RequestMapping("/add")
+    public ModelAndView add() {
         var mv = new ModelAndView("addGenre");
         mv.addObject("genre", new Genre());
         return mv;
@@ -49,7 +49,6 @@ public class GenreController {
     @GetMapping
     @RequestMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
-        var mv = new ModelAndView("addGenre");
         var opt = service.findById(id);
         if(opt.isPresent()) {
             service.delete(opt.get());
