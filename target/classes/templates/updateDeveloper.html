@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro Desenvolvedora</title>
+    <title>Editar Desenvolvedora</title>
     <link rel="stylesheet" href="/css/addOrUpdate.css">
 </head>
 <body>
@@ -26,7 +26,7 @@
                 <button type="submit">Salvar</button>
             </div>
             <div class="form-group">
-                <button type="submit" th:href="@{/ageRange/{id}/delete(id=${id})}">Excluir</button>
+                <button type="submit" th:href="@{/developer/{id}/delete(id=${id})}">Excluir</button>
             </div>
             <div class="form-group">
                 <button type="reset">Cancelar</button>

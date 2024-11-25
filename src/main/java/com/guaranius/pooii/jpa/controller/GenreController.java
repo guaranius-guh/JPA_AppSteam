@@ -21,7 +21,7 @@ public class GenreController {
 
     @GetMapping
     public ModelAndView genres() {
-        var mv = new ModelAndView("home");
+        var mv = new ModelAndView("genres");
         mv.addObject("list", service.findAll());
         return mv;
     }

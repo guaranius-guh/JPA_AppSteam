@@ -1,11 +1,9 @@
-/* Resetando algumas margens e paddings */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilo geral da página */
 body {
     font-family: Arial, sans-serif;
     background-color: #1b2838;
@@ -16,7 +14,6 @@ body {
     margin: 0;
 }
 
-/* Container principal do formulário */
 .container {
     background-color: #fff;
     padding: 20px;
@@ -31,7 +28,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Estilo para os campos do formulário */
 .form-group {
     margin-bottom: 15px;
 }
@@ -46,6 +42,8 @@ label {
 input[type="text"],
 input[type="date"],
 input[type="number"],
+input[type="email"],
+input[type="password"],
 select {
     width: 100%;
     padding: 10px;

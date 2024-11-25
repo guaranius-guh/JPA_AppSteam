@@ -21,7 +21,7 @@ public class AgeRangeController {
 
     @GetMapping
     public ModelAndView ageRanges() {
-        var mv = new ModelAndView("home");
+        var mv = new ModelAndView("ageRanges");
         mv.addObject("list", service.findAll());
         return mv;
     }

@@ -21,7 +21,7 @@ public class UserController {
 
     @GetMapping
     public ModelAndView users() {
-        var mv = new ModelAndView("home");
+        var mv = new ModelAndView("users");
         mv.addObject("list", service.findAll());
         return mv;
     }

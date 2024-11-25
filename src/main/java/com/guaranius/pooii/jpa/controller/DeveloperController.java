@@ -21,7 +21,7 @@ public class DeveloperController {
 
     @GetMapping
     public ModelAndView developers() {
-        var mv = new ModelAndView("home");
+        var mv = new ModelAndView("developers");
         mv.addObject("list", service.findAll());
         return mv;
     }

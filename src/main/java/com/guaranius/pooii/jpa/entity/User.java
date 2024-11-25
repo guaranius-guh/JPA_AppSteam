@@ -1,7 +1,5 @@
 package com.guaranius.pooii.jpa.entity;
 
-import com.guaranius.pooii.jpa.enums.Profile;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +24,5 @@ public class User {
     
     private String email;
     
-    private String password;
-
-    private Profile profile;    
+    private String password;    
 }
