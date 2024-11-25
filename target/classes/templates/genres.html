@@ -15,15 +15,17 @@
             <input type="text" placeholder="Pesquisar jogos..." id="search">
         </div>
         <div class="menu">
-            <a class="addButton" th:href="@{/game/add}">Novo Jogo</a>
-            <a class="addButton" th:href="@{/developer/add}">Nova Desenvolvedora</a>
-            <a class="addButton" th:href="@{/genre/add}">Novo Gênero</a>
-            <a class="addButton" th:href="@{/ageRange/add}">Nova Faixa Etária</a>
-            <a class="addButton" th:href="@{/user}">Sair</a>
+            <a class="addButton" th:href="@{/game}">Jogos</a>
+            <a class="addButton" th:href="@{/developer}">Desenvolvedoras</a>
+            <a class="addButton" th:href="@{/genre}">Gêneros</a>
+            <a class="addButton" th:href="@{/ageRange}">Faixa Etárias</a>
+            <a class="addButton" th:href="@{/user}">Usuários</a>
+            <a class="addButton" th:href="@{/home}">Sair</a>
         </div>
     </header>
     <main>
         <div class="game-section">
+            <a class="addButton" th:href="@{/genre/add}">Novo Gênero</a>
             <div class="game-grid">
                 <div th:each="e : ${list}" class="game-card">
                     <div class="game-info">
