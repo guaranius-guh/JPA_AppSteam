@@ -61,7 +61,7 @@ public class UserController {
     public ModelAndView insert(@ModelAttribute("user") User user) {
         try {
             service.save(user);
-            return new ModelAndView("redirect:/game");
+            return new ModelAndView("redirect:/");
         } catch (Exception e) {
             var mv = new ModelAndView("addUser");
             mv.addObject("user", user);

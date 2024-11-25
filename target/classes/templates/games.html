@@ -26,13 +26,16 @@
         <div class="game-section">
             <div class="game-grid">
                 <div th:each="e : ${list}" class="game-card">
+                    <div class="game-image">
+                        <img src="https://via.placeholder.com/150">
+                    </div>
                     <div class="game-info">
-                        <h3 th:text="${e.ageRange}">Faixa Etária</h3>
-                        <a th:href="@{/ageRange/{id}(id=${e.id})}" class="edit-link">Editar</a>
+                        <h3 th:text="${e.name}">Nome do Jogo</h3>
+                        <a th:href="@{/game/{id}(id=${e.id})}" class="edit-link">Editar</a>
                     </div>
                 </div>
             </div>
-            <p th:unless="${list.size()} > 0">Não há faixa etárias cadastradas.</p>
+            <p th:unless="${list.size()} > 0">Não há jogos cadastrados.</p>
         </div>
     </main>
 </body>

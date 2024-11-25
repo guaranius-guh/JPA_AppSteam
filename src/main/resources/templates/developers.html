@@ -8,7 +8,9 @@
 </head>
 <body>
     <header>
-        <button><div class="logo"> <img src="https://www.pinclipart.com/picdir/middle/100-1003109_new-steam-steam-logo-png-clipart.png"></div></button>
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/1024px-Steam_icon_logo.svg.png">
+        </div>
         <div class="search-container">
             <input type="text" placeholder="Pesquisar jogos..." id="search">
         </div>
@@ -17,9 +19,8 @@
             <a class="addButton" th:href="@{/developer/add}">Nova Desenvolvedora</a>
             <a class="addButton" th:href="@{/genre/add}">Novo Gênero</a>
             <a class="addButton" th:href="@{/ageRange/add}">Nova Faixa Etária</a>
-            <a class="addButton" th:href="@{/user/add}">Novo Usuário</a>
             <a class="addButton" th:href="@{/user}">Sair</a>
-            </div>
+        </div>
     </header>
     <main>
         <div class="game-section">

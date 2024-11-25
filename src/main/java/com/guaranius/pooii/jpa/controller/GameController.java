@@ -21,7 +21,7 @@ public class GameController {
 
     @GetMapping
     public ModelAndView home() {
-        var mv = new ModelAndView("home");
+        var mv = new ModelAndView("games");
         mv.addObject("list", service.findAll());
         return mv;
     }
