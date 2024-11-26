@@ -58,7 +58,8 @@ public class AgeRangeController {
 
     @PostMapping
     @RequestMapping("/save")
-    public ModelAndView insert(@ModelAttribute("ageRange") AgeRange ageRange) {
+    public ModelAndView insert(@ModelAttribute("ageRange") String ageRangeField) {
+        AgeRange ageRange = new AgeRange(ageRangeField);
         try {
             service.save(ageRange);
             return new ModelAndView("redirect:/ageRange");

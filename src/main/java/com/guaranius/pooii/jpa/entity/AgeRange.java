@@ -21,4 +21,8 @@ public class AgeRange {
     private Long id;
     
     private String ageRange;
+
+    public AgeRange(String ageRange) {
+        this.ageRange = ageRange;
+    }
 }
