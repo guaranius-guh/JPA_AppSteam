@@ -43,7 +43,7 @@ public class GenreController {
             mv.addObject("genre", opt.get());
             return mv;
         }
-        return new ModelAndView("redirect:/game");
+        return new ModelAndView("redirect:/genre");
     }
 
     @GetMapping
@@ -53,7 +53,7 @@ public class GenreController {
         if(opt.isPresent()) {
             service.delete(opt.get());
         }
-        return new ModelAndView("redirect:/game");
+        return new ModelAndView("redirect:/genre");
     }
 
     @PostMapping
@@ -61,7 +61,7 @@ public class GenreController {
     public ModelAndView insert(@ModelAttribute("genre") Genre genre) {
         try {
             service.save(genre);
-            return new ModelAndView("redirect:/game");
+            return new ModelAndView("redirect:/genre");
         } catch (Exception e) {
             var mv = new ModelAndView("addGenre");
             mv.addObject("genre", genre);

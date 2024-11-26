@@ -43,7 +43,7 @@ public class AgeRangeController {
             mv.addObject("ageRange", opt.get());
             return mv;
         }
-        return new ModelAndView("redirect:/game");
+        return new ModelAndView("redirect:/ageRange");
     }
 
     @GetMapping
@@ -53,7 +53,7 @@ public class AgeRangeController {
         if(opt.isPresent()) {
             service.delete(opt.get());
         }
-        return new ModelAndView("redirect:/game");
+        return new ModelAndView("redirect:/ageRange");
     }
 
     @PostMapping
@@ -61,7 +61,7 @@ public class AgeRangeController {
     public ModelAndView insert(@ModelAttribute("ageRange") AgeRange ageRange) {
         try {
             service.save(ageRange);
-            return new ModelAndView("redirect:/game");
+            return new ModelAndView("redirect:/ageRange");
         } catch (Exception e) {
             var mv = new ModelAndView("addAgeRange");
             mv.addObject("ageRange", ageRange);

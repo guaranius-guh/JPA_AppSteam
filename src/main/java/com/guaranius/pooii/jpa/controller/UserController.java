@@ -2,7 +2,6 @@ package com.guaranius.pooii.jpa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +43,7 @@ public class UserController {
             mv.addObject("user", opt.get());
             return mv;
         }
-        return new ModelAndView("redirect:/game");
+        return new ModelAndView("redirect:/user");
     }
 
     @GetMapping
@@ -54,7 +53,7 @@ public class UserController {
         if(opt.isPresent()) {
             service.delete(opt.get());
         }
-        return new ModelAndView("redirect:/game");
+        return new ModelAndView("redirect:/user");
     }
 
     @PostMapping
@@ -62,7 +61,7 @@ public class UserController {
     public ModelAndView insert(@ModelAttribute("user") User user) {
         try {
             service.save(user);
-            return new ModelAndView("redirect:/");
+            return new ModelAndView("redirect:/user");
         } catch (Exception e) {
             var mv = new ModelAndView("addUser");
             mv.addObject("user", user);

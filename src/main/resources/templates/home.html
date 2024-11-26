@@ -23,11 +23,10 @@
             <div class="game-grid">
                 <div th:each="e : ${list}" class="game-card">
                     <div class="game-image">
-                        <img src="https://via.placeholder.com/150">
+                        <img th:src="${e.image != null ? e.image : 'https://via.placeholder.com/150'}" alt="Imagem do Jogo">
                     </div>
                     <div class="game-info">
                         <h3 th:text="${e.name}">Nome do Jogo</h3>
-                        <a th:href="@{/game/{id}(id=${e.id})}" class="edit-link">Editar</a>
                     </div>
                 </div>
             </div>

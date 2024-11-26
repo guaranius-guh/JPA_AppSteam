@@ -43,7 +43,7 @@ public class DeveloperController {
             mv.addObject("developer", opt.get());
             return mv;
         }
-        return new ModelAndView("redirect:/game");
+        return new ModelAndView("redirect:/developer");
     }
 
     @GetMapping
@@ -53,7 +53,7 @@ public class DeveloperController {
         if(opt.isPresent()) {
             service.delete(opt.get());
         }
-        return new ModelAndView("redirect:/game");
+        return new ModelAndView("redirect:/developer");
     }
 
     @PostMapping
@@ -61,7 +61,7 @@ public class DeveloperController {
     public ModelAndView insert(@ModelAttribute("developer") Developer developer) {
         try {
             service.save(developer);
-            return new ModelAndView("redirect:/game");
+            return new ModelAndView("redirect:/developer");
         } catch (Exception e) {
             var mv = new ModelAndView("addDeveloper");
             mv.addObject("developer", developer);
