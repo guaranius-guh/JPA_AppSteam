@@ -53,6 +53,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/user/add").permitAll()
+                                .requestMatchers("/user/save").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(form -> form
