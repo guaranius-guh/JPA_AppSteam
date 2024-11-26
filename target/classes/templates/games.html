@@ -25,14 +25,14 @@
     <main>
         <div class="game-section">
             <a class="addButton" th:href="@{/game/add}">Novo Jogo</a>
-            <div class="game-grid">
+            <div class="game-grid" id="search-results">
                 <div th:each="e : ${list}" class="game-card">
                     <div class="game-image">
                         <img th:src="${e.image != null ? e.image : 'https://via.placeholder.com/150'}" alt="Imagem do Jogo">
                     </div>
                     <div class="game-info">
                         <h3 th:text="${e.name}">Nome do Jogo</h3>
-                        <h4 th:text="${e.developer.name}">Nome do Jogo</h4>
+                        <h4 th:text="${e.developer.name}">Nome do Desenvolvedor</h4>
                         <a th:href="@{/game/{id}(id=${e.id})}" class="edit-link">Editar</a>
                     </div>
                 </div>
@@ -40,5 +40,31 @@
             <p th:unless="${list.size()} > 0">Não há jogos cadastrados.</p>
         </div>
     </main>
+    <script>
+        async function searchGames() {
+            const query = document.getElementById('search').value;
+            const resultsContainer = document.getElementById('search-results');
+
+            try {
+                const url = query ? `/game/search/${encodeURIComponent(query)}` : `/game`;
+
+                const response = await fetch(url);
+
+                if (response.ok) {
+                    const games = await response.text();
+                    if (games.length > 0) {
+                        document.getElementById('search-results').innerHTML = games
+                    } else {
+                        resultsContainer.innerHTML = '<p>Nenhum jogo encontrado.</p>';
+                    }
+                } else {
+                    resultsContainer.innerHTML = '<p>Erro ao buscar jogos. Tente novamente mais tarde.</p>';
+                }
+            } catch (error) {
+                resultsContainer.innerHTML = '<p>Erro ao buscar jogos. Tente novamente mais tarde.</p>';
+            }
+        }
+        document.getElementById('search').addEventListener('input', searchGames);
+    </script>
 </body>
 </html>

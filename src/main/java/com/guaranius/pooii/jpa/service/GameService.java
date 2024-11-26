@@ -21,6 +21,10 @@ public class GameService {
         return repository.findById(id);
     }
 
+    public List<Game> findByName(String name) {
+        return repository.findByName(name);
+    }
+
     public List<Game> findAll() {
         return repository.findAll(Sort.by("name"));
     }

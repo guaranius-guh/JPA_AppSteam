@@ -26,16 +26,21 @@ public class GameController {
         return mv;
     }
 
-    @GetMapping
-    @RequestMapping("/add")
+    @GetMapping("/search/{name}")
+    public ModelAndView homeByName(@PathVariable String name) {
+        var mv = new ModelAndView("search-results");
+        mv.addObject("list", service.findByName(name));
+        return mv;
+    }
+
+    @GetMapping("/add")
     public ModelAndView add() {
         var mv = new ModelAndView("addGame");
         mv.addObject("game", new Game());
         return mv;
     }
 
-    @GetMapping
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public ModelAndView update(@PathVariable long id) {
         var mv = new ModelAndView("updateGame");
         var opt = service.findById(id);
@@ -46,8 +51,7 @@ public class GameController {
         return new ModelAndView("redirect:/game");
     }
 
-    @GetMapping
-    @RequestMapping("/{id}/delete")
+    @GetMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
         var opt = service.findById(id);
         if(opt.isPresent()) {
@@ -56,8 +60,7 @@ public class GameController {
         return new ModelAndView("redirect:/game");
     }
 
-    @PostMapping
-    @RequestMapping("/save")
+    @PostMapping("/save")
     public ModelAndView insert(@ModelAttribute("game") Game game) {
         try {
             service.save(game);
