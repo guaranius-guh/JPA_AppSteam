@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.guaranius.pooii.jpa.SteamAppApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.741 s -- in com.guaranius.pooii.jpa.SteamAppApplicationTests

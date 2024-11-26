@@ -2,7 +2,6 @@ package com.guaranius.pooii.jpa.service;
 
 import com.guaranius.pooii.jpa.entity.UserRole;
 import com.guaranius.pooii.jpa.repository.UserRepository;
-import com.guaranius.pooii.jpa.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,8 +20,6 @@ public class LoginService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private UserRoleRepository userRoleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

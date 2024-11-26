@@ -57,12 +57,12 @@ header {
     text-align: center;
     margin-left: 5px;
     margin-bottom: 5px;
-  }
+}
   
-  .addButton:hover {
+.addButton:hover {
     background-color: #0056b3;
     text-decoration: none;
-  }
+}
 
 main {
     padding: 20px;
