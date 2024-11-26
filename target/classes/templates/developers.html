@@ -29,6 +29,7 @@
                 <div th:each="e : ${list}" class="game-card">
                     <div class="game-info">
                         <h3 th:text="${e.name}">Desenvolvedora</h3>
+                        <h4 th:text="${e.nationality}">País</h4>
                         <a th:href="@{/developer/{id}(id=${e.id})}" class="edit-link">Editar</a>
                     </div>
                 </div>

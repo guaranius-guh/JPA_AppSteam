@@ -27,10 +27,11 @@
                     </div>
                     <div class="game-info">
                         <h3 th:text="${e.name}">Nome do Jogo</h3>
+                        <h4 th:text="${e.developer.name}">Nome do Jogo</h4>
+                        <p th:unless="${list.size()} > 0">Não há jogos cadastrados.</p>
                     </div>
                 </div>
             </div>
-            <p th:unless="${list.size()} > 0">Não há jogos cadastrados.</p>
         </div>
     </main>
 </body>

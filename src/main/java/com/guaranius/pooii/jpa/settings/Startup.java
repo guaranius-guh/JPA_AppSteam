@@ -33,15 +33,5 @@ public class Startup {
             userRole.setName("Usuário");
             userRoleRepository.save(userRole);
         }
-        if(userRepository.findAll().isEmpty()) {
-            User user = new User();
-            var roleAdmin = userRoleRepository.findAll().stream().filter(userRole -> userRole.getCode().equals("ROLE_ADMIN")).findFirst();
-            user.setUsername("gustavo");
-            user.setActive(true);
-            user.setName("Gustavo Antonius");
-            user.setRole(roleAdmin.get());
-            user.setPassword(bCryptPasswordEncoder.encode("123"));
-            userRepository.save(user);
-        }
     }
 }
