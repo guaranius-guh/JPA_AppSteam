@@ -1,6 +1,7 @@
 package com.guaranius.pooii.jpa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,14 +48,24 @@ public class AgeRangeController {
         return new ModelAndView("redirect:/ageRange");
     }
 
-    @GetMapping
-    @RequestMapping("/{id}/delete")
+    @GetMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
+        ModelAndView mv = new ModelAndView();
         var opt = service.findById(id);
-        if(opt.isPresent()) {
-            service.delete(opt.get());
+        if (opt.isPresent()) {
+            try {
+                service.delete(opt.get());
+                mv.setViewName("redirect:/ageRange");
+            } catch (DataIntegrityViolationException e) {
+                mv.addObject("error", "Não é possível excluir esta faixa etária porque ela está sendo utilizada em outros registros.");
+                mv.addObject("ageRange", opt.get());
+                mv.setViewName("updateAgeRange");
+            }
+        } else {
+            mv.addObject("error", "Faixa etária não encontrada.");
+            mv.setViewName("updateAgeRange");
         }
-        return new ModelAndView("redirect:/ageRange");
+        return mv;
     }
 
     @PostMapping

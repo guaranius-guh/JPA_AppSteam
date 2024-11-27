@@ -1,6 +1,7 @@
 package com.guaranius.pooii.jpa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,14 +54,24 @@ public class UserController {
         return new ModelAndView("redirect:/user");
     }
 
-    @GetMapping
-    @RequestMapping("/{id}/delete")
+    @GetMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
+        ModelAndView mv = new ModelAndView();
         var opt = service.findById(id);
-        if(opt.isPresent()) {
-            service.delete(opt.get());
+        if (opt.isPresent()) {
+            try {
+                service.delete(opt.get());
+                mv.setViewName("redirect:/game");
+            } catch (DataIntegrityViolationException e) {
+                mv.addObject("error", "Não é possível excluir este usuário porque ele está sendo utilizada em outros registros.");
+                mv.addObject("user", opt.get());
+                mv.setViewName("updateUser");
+            }
+        } else {
+            mv.addObject("error", "Usuário não encontrado.");
+            mv.setViewName("updateUser");
         }
-        return new ModelAndView("redirect:/user");
+        return mv;
     }
 
     @PostMapping

@@ -1,6 +1,7 @@
 package com.guaranius.pooii.jpa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,14 +47,24 @@ public class GenreController {
         return new ModelAndView("redirect:/genre");
     }
 
-    @GetMapping
-    @RequestMapping("/{id}/delete")
+    @GetMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
+        ModelAndView mv = new ModelAndView();
         var opt = service.findById(id);
-        if(opt.isPresent()) {
-            service.delete(opt.get());
+        if (opt.isPresent()) {
+            try {
+                service.delete(opt.get());
+                mv.setViewName("redirect:/genre");
+            } catch (DataIntegrityViolationException e) {
+                mv.addObject("error", "Não é possível excluir este Gênero porque ele está sendo utilizada em outros registros.");
+                mv.addObject("genre", opt.get());
+                mv.setViewName("updateGenre");
+            }
+        } else {
+            mv.addObject("error", "Gênero não encontrado.");
+            mv.setViewName("updateGenre");
         }
-        return new ModelAndView("redirect:/genre");
+        return mv;
     }
 
     @PostMapping

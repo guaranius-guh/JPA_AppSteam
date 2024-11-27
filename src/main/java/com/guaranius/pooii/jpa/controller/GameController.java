@@ -1,6 +1,7 @@
 package com.guaranius.pooii.jpa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -53,11 +54,22 @@ public class GameController {
 
     @GetMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
+        ModelAndView mv = new ModelAndView();
         var opt = service.findById(id);
-        if(opt.isPresent()) {
-            service.delete(opt.get());
+        if (opt.isPresent()) {
+            try {
+                service.delete(opt.get());
+                mv.setViewName("redirect:/game");
+            } catch (DataIntegrityViolationException e) {
+                mv.addObject("error", "Não é possível excluir este jogo porque ele está sendo utilizada em outros registros.");
+                mv.addObject("game", opt.get());
+                mv.setViewName("updateGame");
+            }
+        } else {
+            mv.addObject("error", "Jogo não encontrado.");
+            mv.setViewName("updateGame");
         }
-        return new ModelAndView("redirect:/game");
+        return mv;
     }
 
     @PostMapping("/save")
