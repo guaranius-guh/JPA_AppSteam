@@ -38,6 +38,7 @@
                     <div class="game-info">
                         <h3 th:text="${e.name}">Nome do Jogo</h3>
                         <h4 th:text="${e.developer.name}">Nome do Desenvolvedor</h4>
+                        <h4 th:text="${e.value}">Valor</h4>
                         <a th:href="@{/game/{id}(id=${e.id})}" class="edit-link">Editar</a>
                     </div>
                 </div>

@@ -51,20 +51,10 @@ public class AgeRangeController {
     @RequestMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
         var opt = service.findById(id);
-        ModelAndView mv = new ModelAndView();
         if(opt.isPresent()) {
-            try {
-                service.delete(opt.get());
-                mv.setViewName("redirect:/ageRange");
-            } catch (Exception e) {
-                mv.setViewName("updateAgeRange");
-                mv.addObject("error", "Não foi possível excluir a Faixa Etária");
-            }
-        } else {
-            mv.setViewName("updateAgeRange");
-            mv.addObject("error", "Faixa Etária não encontrada.");
+            service.delete(opt.get());
         }
-        return mv;
+        return new ModelAndView("redirect:/ageRange");
     }
 
     @PostMapping

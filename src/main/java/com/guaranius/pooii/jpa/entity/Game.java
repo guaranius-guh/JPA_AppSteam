@@ -2,6 +2,8 @@ package com.guaranius.pooii.jpa.entity;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,7 +40,10 @@ public class Game {
     @JoinColumn(name = "id_age_range")
     private AgeRange ageRange;
 
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate releaseDate;
+
+    private double value;
 
     private String image;
 }
