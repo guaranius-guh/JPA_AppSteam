@@ -14,6 +14,11 @@
         <div class="search-container">
             <input type="text" placeholder="Pesquisar jogos..." id="search">
         </div>
+        <div>
+            <button id="search-btn">
+                <Img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Vector_search_icon.svg/1890px-Vector_search_icon.svg.png">
+            </button>
+        </div>
         <div class="menu">
             <a class="addButton" th:href="@{/game}">Jogos</a>
             <a class="addButton" th:href="@{/developer}">Desenvolvedoras</a>
@@ -25,7 +30,7 @@
     <main>
         <div class="game-section">
             <a class="addButton" th:href="@{/game/add}">Novo Jogo</a>
-            <div class="game-grid" id="search-results">
+            <div class="game-grid">
                 <div th:each="e : ${list}" class="game-card">
                     <div class="game-image">
                         <img th:src="${e.image != null ? e.image : 'https://via.placeholder.com/150'}" alt="Imagem do Jogo">
@@ -40,31 +45,6 @@
             <p th:unless="${list.size()} > 0">Não há jogos cadastrados.</p>
         </div>
     </main>
-    <script>
-        async function searchGames() {
-            const query = document.getElementById('search').value;
-            const resultsContainer = document.getElementById('search-results');
-
-            try {
-                const url = query ? `/game/search/${encodeURIComponent(query)}` : `/game`;
-
-                const response = await fetch(url);
-
-                if (response.ok) {
-                    const games = await response.text();
-                    if (games.length > 0) {
-                        document.getElementById('search-results').innerHTML = games
-                    } else {
-                        resultsContainer.innerHTML = '<p>Nenhum jogo encontrado.</p>';
-                    }
-                } else {
-                    resultsContainer.innerHTML = '<p>Erro ao buscar jogos. Tente novamente mais tarde.</p>';
-                }
-            } catch (error) {
-                resultsContainer.innerHTML = '<p>Erro ao buscar jogos. Tente novamente mais tarde.</p>';
-            }
-        }
-        document.getElementById('search').addEventListener('input', searchGames);
-    </script>
+    <script src="/js/search.js"></script>
 </body>
 </html>

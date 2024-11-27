@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.guaranius.pooii.jpa.entity.Game;
 
 public interface GameRepository extends JpaRepository<Game, Long> {
-    List<Game> findByName(String name);
+    List<Game> findByNameContainingIgnoreCase(String name);
 }

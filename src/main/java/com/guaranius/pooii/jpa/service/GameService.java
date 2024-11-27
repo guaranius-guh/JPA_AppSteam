@@ -22,7 +22,7 @@ public class GameService {
     }
 
     public List<Game> findByName(String name) {
-        return repository.findByName(name);
+        return repository.findByNameContainingIgnoreCase(name);
     }
 
     public List<Game> findAll() {

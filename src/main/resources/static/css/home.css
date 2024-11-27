@@ -25,11 +25,11 @@ header {
 
 .search-container {
     flex-grow: 1;
-    margin-left: 50px;
+    margin-left: 10px;
 }
 
 .search-container input {
-    width: 80%;
+    width: 100%;
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -122,6 +122,24 @@ main {
     color: #ccc;
     font-size: 18px;
     margin-top: 20px;
+}
+
+button {
+    width: 5%;
+    padding: 12px;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+#search-btn img {
+    display: flex;
+    width: 55%;
+    height: auto;
+    max-width: 30px;
+    min-width: 20px;
 }
 
 @media (max-width: 768px) {

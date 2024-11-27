@@ -28,7 +28,7 @@ public class GameController {
 
     @GetMapping("/search/{name}")
     public ModelAndView homeByName(@PathVariable String name) {
-        var mv = new ModelAndView("search-results");
+        var mv = new ModelAndView("searchResults");
         mv.addObject("list", service.findByName(name));
         return mv;
     }
