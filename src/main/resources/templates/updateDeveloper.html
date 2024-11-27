@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <button type="submit">
-                    <a class="buttonLink" th:href="@{/developer/{id}/delete(id=${id})}">Excluir</a>
+                    <a class="buttonLink" th:href="@{/developer/{id}/delete(id=${id})}" onclick="return confirm('Tem certeza de que deseja excluir?');">Excluir</a>
                 </button>
             </div>
             <div class="form-group">

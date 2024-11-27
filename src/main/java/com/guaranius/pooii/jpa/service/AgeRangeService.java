@@ -22,11 +22,11 @@ public class AgeRangeService {
     }
 
     public List<AgeRange> findAll() {
-        return repository.findAll(Sort.by("ageRange"));
+        return repository.findAll(Sort.by("ageR"));
     }
 
     public void save(AgeRange ageRange) {
-        if(Strings.isBlank(ageRange.getAgeRange())) {
+        if(Strings.isBlank(ageRange.getAgeR())) {
             throw new RuntimeException("Nada informado.");
         }
         repository.save(ageRange);

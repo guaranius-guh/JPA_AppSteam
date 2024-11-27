@@ -20,9 +20,5 @@ public class AgeRange {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String ageRange;
-
-    public AgeRange(String ageRange) {
-        this.ageRange = ageRange;
-    }
+    private String ageR;
 }

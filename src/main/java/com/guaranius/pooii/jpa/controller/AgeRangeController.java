@@ -23,6 +23,7 @@ public class AgeRangeController {
     public ModelAndView ageRanges() {
         var mv = new ModelAndView("ageRanges");
         mv.addObject("list", service.findAll());
+        System.out.println(service.findAll());
         return mv;
     }
 
@@ -50,16 +51,25 @@ public class AgeRangeController {
     @RequestMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable long id) {
         var opt = service.findById(id);
+        ModelAndView mv = new ModelAndView();
         if(opt.isPresent()) {
-            service.delete(opt.get());
+            try {
+                service.delete(opt.get());
+                mv.setViewName("redirect:/ageRange");
+            } catch (Exception e) {
+                mv.setViewName("updateAgeRange");
+                mv.addObject("error", "Não foi possível excluir a Faixa Etária");
+            }
+        } else {
+            mv.setViewName("updateAgeRange");
+            mv.addObject("error", "Faixa Etária não encontrada.");
         }
-        return new ModelAndView("redirect:/ageRange");
+        return mv;
     }
 
     @PostMapping
     @RequestMapping("/save")
-    public ModelAndView insert(@ModelAttribute("ageRange") String ageRangeField) {
-        AgeRange ageRange = new AgeRange(ageRangeField);
+    public ModelAndView insert(@ModelAttribute("ageRange") AgeRange ageRange) {
         try {
             service.save(ageRange);
             return new ModelAndView("redirect:/ageRange");
