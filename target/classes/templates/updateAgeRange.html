@@ -22,14 +22,10 @@
                 <button type="submit">Salvar</button>
             </div>
             <div class="form-group">
-                <button>
-                    <a class="buttonLink" th:href="@{/ageRange/{id}/delete(id=${ageRange.id})}" onclick="return confirm('Tem certeza de que deseja excluir?');">Excluir</a>
-                </button>
+                <a class="buttonLink" th:href="@{/ageRange/{id}/delete(id=${ageRange.id})}" onclick="return confirm('Tem certeza de que deseja excluir essa faixa etária?');">Excluir</a>
             </div>
             <div class="form-group">
-                <button>
-                    <a class="buttonLink" th:href="@{/ageRange}">Voltar</a>
-                </button>
+                <a class="buttonLink" th:href="@{/ageRange}">Voltar</a>
             </div>
         </form>
         <p th:if="${error != null}" th:text="${error}"></p>
