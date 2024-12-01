@@ -1,5 +1,5 @@
 JPA_AppSteam
-Projeto criado para a disciplina de Programação Orientada a Objetos II, da Univille.
+> Projeto criado para a disciplina de Programação Orientada a Objetos II, da Univille.
 
 ---
 
